@@ -1,4 +1,4 @@
-package sondow.twitter;
+package edu.studio.sample;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -8,8 +8,8 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
- * Interacts with the twitter API to post tweets or do other twitter actions for a given
- * Twitter account.
+ * Interacts with the twitter API to post tweets or do other twitter actions for
+ * a given Twitter account.
  *
  * @author @JoeSondow
  */
@@ -18,18 +18,19 @@ public class Tweeter {
     Twitter twitter;
 
     /**
-     * Creates an instance to interact with the Twitter accounts the is set up as the default
-     * for this project.
+     * Creates an instance to interact with the Twitter accounts the is set up
+     * as the default for this project.
      */
     public Tweeter() {
         this(new ConfigurationBuilder().setTrimUserEnabled(true).build());
     }
 
     /**
-     * Creates an instance to interact with the Twitter account specified by the supplied
-     * configuration.
+     * Creates an instance to interact with the Twitter account specified by the
+     * supplied configuration.
      *
-     * @param config the Twitter configuration to use to authenticate
+     * @param config
+     *            the Twitter configuration to use to authenticate
      */
     public Tweeter(Configuration config) {
         twitter = new TwitterFactory(config).getInstance();
@@ -38,7 +39,8 @@ public class Tweeter {
     /**
      * Posts a tweet.
      *
-     * @param message the content to tweet
+     * @param message
+     *            the content to tweet
      * @return the full tweet object that was created
      */
     public Status tweet(String message) {
@@ -47,7 +49,8 @@ public class Tweeter {
             String msg = "Successfully tweeted message: " + message + " with status " + status;
             System.out.println(msg);
             return status;
-        } catch (TwitterException e) {
+        }
+        catch (TwitterException e) {
             e.printStackTrace();
         }
         return null;

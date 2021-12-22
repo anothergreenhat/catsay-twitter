@@ -1,4 +1,4 @@
-package sondow.twitter;
+package edu.studio.sample;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -16,7 +16,8 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     /*
      * (non-Javadoc)
      *
-     * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.
+     * @see
+     * com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.
      * lang.Object, com.amazonaws.services.lambda.runtime.Context)
      */
     @Override
@@ -28,10 +29,11 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     }
 
     /**
-     * AWS Lambda only allows underscores in environment variables, not dots, so the default
-     * ways twitter4j finds keys aren't possible. Instead, write your own code that gets the
-     * configuration either from Lambda-friendly environment variables or from a default
-     * twitter4j.properties file at the project root, or on the classpath, or in WEB-INF.
+     * AWS Lambda only allows underscores in environment variables, not dots, so
+     * the default ways twitter4j finds keys aren't possible. Instead, write
+     * your own code that gets the configuration either from Lambda-friendly
+     * environment variables or from a default twitter4j.properties file at the
+     * project root, or on the classpath, or in WEB-INF.
      *
      * @return configuration containing Twitter authentication strings
      */
@@ -60,7 +62,8 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     /**
      * Provides a new Tweeter object.
      * 
-     * This method is pulled out to make this class easier to unit test with a Spy in Spock.
+     * This method is pulled out to make this class easier to unit test with a
+     * Spy in Spock.
      * 
      * @return the Tweeter that will do the tweeting
      */
@@ -69,12 +72,14 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     }
 
     /**
-     * Gets an environment variable, or null if there is no such environment variable for the
-     * specified key.
+     * Gets an environment variable, or null if there is no such environment
+     * variable for the specified key.
      * 
-     * This method is pulled out to make this class easier to unit test with a Spy in Spock.
+     * This method is pulled out to make this class easier to unit test with a
+     * Spy in Spock.
      * 
-     * @param key the name of the environment variable
+     * @param key
+     *            the name of the environment variable
      * @return the value of the environment variable
      */
     /* package */ String getEnvVar(String key) {
