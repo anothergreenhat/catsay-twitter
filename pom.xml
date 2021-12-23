@@ -40,7 +40,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>edu.studio.sample.ConsoleApp</mainClass>
+							<mainClass>edu.studio.sample.Catsay</mainClass>
 							<addClasspath>true</addClasspath>
 						</manifest>
 					</archive>
@@ -74,6 +74,12 @@
 			<artifactId>aws-lambda-java-core</artifactId>
 			<version>1.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>de.javatux.jfortune</groupId>
+			<artifactId>jfortune</artifactId>
+			<version>0.8</version>
+		</dependency>
+
 
 	</dependencies>
 

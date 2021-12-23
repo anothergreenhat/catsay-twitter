@@ -4,6 +4,7 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -15,34 +16,16 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class Tweeter {
 
-    Twitter twitter;
+    private Twitter twitter;
 
-    /**
-     * Creates an instance to interact with the Twitter accounts the is set up
-     * as the default for this project.
-     */
     public Tweeter() {
         this(new ConfigurationBuilder().setTrimUserEnabled(true).build());
     }
 
-    /**
-     * Creates an instance to interact with the Twitter account specified by the
-     * supplied configuration.
-     *
-     * @param config
-     *            the Twitter configuration to use to authenticate
-     */
     public Tweeter(Configuration config) {
         twitter = new TwitterFactory(config).getInstance();
     }
 
-    /**
-     * Posts a tweet.
-     *
-     * @param message
-     *            the content to tweet
-     * @return the full tweet object that was created
-     */
     public Status tweet(String message) {
         try {
             Status status = twitter.updateStatus(message);
@@ -54,5 +37,17 @@ public class Tweeter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void authorize(String consumerKey, String consumerSecret) {
+        AccessToken accessToken = loadCatsayBotAccessToken();
+        twitter.setOAuthConsumer(consumerKey, consumerSecret);
+        twitter.setOAuthAccessToken(accessToken);
+    }
+
+    private AccessToken loadCatsayBotAccessToken() {
+        String token = "";
+        String tokenSecret = "";
+        return new AccessToken(token, tokenSecret);
     }
 }

@@ -24,25 +24,22 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     public Object handleRequest(Object input, Context context) {
         Configuration config = configure();
         Tweeter tweeter = createTweeter(config);
-        String message = "";
+        // tweeter.authorize(args[0], args[1]);
+        String message = "hello from aws!";
         return tweeter.tweet(message);
+
+        // Tweeter tw = new Tweeter();
+        // tw.authorize(args[0], args[1]);
+        // tw.tweet("hello from java!");
+
     }
 
-    /**
-     * AWS Lambda only allows underscores in environment variables, not dots, so
-     * the default ways twitter4j finds keys aren't possible. Instead, write
-     * your own code that gets the configuration either from Lambda-friendly
-     * environment variables or from a default twitter4j.properties file at the
-     * project root, or on the classpath, or in WEB-INF.
-     *
-     * @return configuration containing Twitter authentication strings
-     */
-    /* package */ Configuration configure() {
+    Configuration configure() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
-        String consumerKeyEnvVar = getEnvVar("twitter4j_oauth_consumerKey");
-        String consumerSecretEnvVar = getEnvVar("twitter4j_oauth_consumerSecret");
-        String accessTokenEnvVar = getEnvVar("twitter4j_oauth_accessToken");
-        String accessTokenSecretEnvVar = getEnvVar("twitter4j_oauth_accessTokenSecret");
+        String consumerKeyEnvVar = getEnvVar("twitter_consumer_key");
+        String consumerSecretEnvVar = getEnvVar("twitter_consumer_secret");
+        String accessTokenEnvVar = getEnvVar("twitter_access_token_key");
+        String accessTokenSecretEnvVar = getEnvVar("twitter_access_token_secret");
         if (consumerKeyEnvVar != null) {
             cb.setOAuthConsumerKey(consumerKeyEnvVar);
         }
@@ -59,30 +56,12 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
         return config;
     }
 
-    /**
-     * Provides a new Tweeter object.
-     * 
-     * This method is pulled out to make this class easier to unit test with a
-     * Spy in Spock.
-     * 
-     * @return the Tweeter that will do the tweeting
-     */
-    /* package */ Tweeter createTweeter(Configuration config) {
+    Tweeter createTweeter(Configuration config) {
         return new Tweeter(config);
     }
 
-    /**
-     * Gets an environment variable, or null if there is no such environment
-     * variable for the specified key.
-     * 
-     * This method is pulled out to make this class easier to unit test with a
-     * Spy in Spock.
-     * 
-     * @param key
-     *            the name of the environment variable
-     * @return the value of the environment variable
-     */
-    /* package */ String getEnvVar(String key) {
+    String getEnvVar(String key) {
         return System.getenv(key);
     }
+
 }
