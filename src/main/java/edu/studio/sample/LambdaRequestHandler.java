@@ -1,8 +1,12 @@
 package edu.studio.sample;
 
+import java.util.Locale;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import jfortune.Cookie;
+import jfortune.Fortune;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -24,13 +28,14 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     public Object handleRequest(Object input, Context context) {
         Configuration config = configure();
         Tweeter tweeter = createTweeter(config);
-        // tweeter.authorize(args[0], args[1]);
-        String message = "hello from aws!";
-        return tweeter.tweet(message);
 
-        // Tweeter tw = new Tweeter();
-        // tw.authorize(args[0], args[1]);
-        // tw.tweet("hello from java!");
+        Fortune fortune = new Fortune(new Locale("en"));
+        fortune.setShortLength(40);
+        Cookie cookie = fortune.getShortCookie();
+
+        Catsay catPrint = new Catsay();
+        String tweetBody = catPrint.makeTweet(cookie);
+        return tweeter.tweet(tweetBody);
 
     }
 
