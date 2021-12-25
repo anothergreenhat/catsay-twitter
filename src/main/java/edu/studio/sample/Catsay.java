@@ -51,11 +51,12 @@ public class Catsay {
         buf[i + 1] = '\0';
         max_col += 3;
 
-        tweetStream += ' ';
-        printLoop('_', max_col);
-        tweetStream += ' ';
+        // tweetStream += ' ';
+        // printLoop('_', max_col);
+        // tweetStream += ' ';
         tweetStream += "\n/";
-        printLoop(' ', max_col);
+        printLoop('ˉ', max_col);
+        // printLoop(' ', max_col);
         tweetStream += "\\\n| ";
         i = 0;
         col = 0;
