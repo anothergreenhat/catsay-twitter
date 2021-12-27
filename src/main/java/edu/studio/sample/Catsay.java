@@ -15,7 +15,9 @@ public class Catsay {
     }
 
     private void printCat() {
-        tweetStream += "      \\ ^  /\\\n       )  ( ')\n      (  /  )\njgs    \\(__)|";
+        // tweetStream += " \\ ^ /\\\n ) ( ')\n ( / )\njgs \\(__)|";
+        tweetStream += "      \\  ^    /\\\r\n" + "        )    (   ' )\r\n" + "       (   /     )\r\n"
+                + "jgs   \\(___) |";
     }
 
     private void printLoop(char c, int cnt) {
@@ -55,7 +57,7 @@ public class Catsay {
         // printLoop('_', max_col);
         // tweetStream += ' ';
         tweetStream += "\n/";
-        printLoop('ˉ', max_col);
+        printLoop('ˉ', max_col + (max_col / 3) - 2);
         // printLoop(' ', max_col);
         tweetStream += "\\\n| ";
         i = 0;
@@ -101,7 +103,7 @@ public class Catsay {
             col++;
         }
         tweetStream += '\\';
-        printLoop('_', max_col);
+        printLoop('_', max_col - (max_col / 14) - 1);
         tweetStream += "/\n";
 
     }

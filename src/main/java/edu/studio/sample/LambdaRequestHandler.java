@@ -35,6 +35,11 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
 
         Catsay catPrint = new Catsay();
         String tweetBody = catPrint.makeTweet(cookie);
+        while (tweetBody.length() > 280) {
+            catPrint.clearStream();
+            cookie = fortune.getShortCookie();
+            tweetBody = catPrint.makeTweet(cookie);
+        }
         return tweeter.tweet(tweetBody);
 
     }
