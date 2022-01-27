@@ -95,7 +95,8 @@ public class Catsay {
         buf[i + 1] = '\0';
         max_col += 3;
 
-        printLoop('~', max_col - (max_col / 14) + 2);
+        // printLoop('~', max_col - (max_col / 14) + 2);
+        tweetStream += "~~~~~~~~~~~~~~~~~~~~~~~~~~~";
         tweetStream += "\n ";
 
         i = 0;
@@ -141,7 +142,8 @@ public class Catsay {
             i++;
             col++;
         }
-        printLoop('~', max_col - (max_col / 14) + 2);
+        // printLoop('~', max_col - (max_col / 14) + 2);
+        tweetStream += "~~~~~~~~~~~~~~~~~~~~~~~~~~~";
         tweetStream += '\n';
 
     }
