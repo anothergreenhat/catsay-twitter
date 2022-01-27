@@ -18,7 +18,7 @@ class SampleTest {
     @Test
     void testCreateShortTweetInLengthLimit() {
         Fortune fortune = new Fortune(new Locale("en"));
-        fortune.setShortLength(50);
+        fortune.setShortLength(180);
         Cookie cookie = fortune.getShortCookie();
 
         Catsay catPrint = new Catsay();

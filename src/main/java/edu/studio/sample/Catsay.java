@@ -35,14 +35,39 @@ public class Catsay {
         int col = 0, max_col = 0, i = 0, tabcnt = 0;
 
         for (char c : cookie.getText().toCharArray()) {
+            if (c == '\n') {
+                buf[i] = ' ';
+                col++;
+                i++;
+                continue;
+            }
             buf[i] = c;
             if (c == '\t') {
                 col = ((col + 8) / 8 * 8);
                 tabcnt++;
+                buf[i] = '\n';
+                col = 0;
+                i++;
+                continue;
             }
-            if (c == '\n') {
+            if (col == 29) {
                 max_col = col > max_col ? col : max_col;
                 col = 0;
+                if (c == ' ' || c == '\t')
+                    buf[i] = '\n';
+                else {
+                    int j = i;
+                    String overhangingWord = "";
+                    while (j > 0 && buf[j] != ' ' || buf[j] != '\t') {
+                        overhangingWord = buf[j] + overhangingWord;
+                        j--;
+                        if (buf[j] == ' ' || buf[j] == '\t')
+                            break;
+                    }
+                    buf[j] = '\n';
+                    for (int k = 0; i - j != 0; j++, k++)
+                        buf[i + j] = overhangingWord.charAt(k);
+                }
             }
             if (c == cookie.getText().charAt(cookie.length() - 1)) {
                 max_col = col > max_col ? col : max_col;
@@ -53,17 +78,10 @@ public class Catsay {
         buf[i + 1] = '\0';
         max_col += 3;
 
-        // tweetStream += ' ';
-        // printLoop('_', max_col);
-        // tweetStream += ' ';
-        tweetStream += "\n/";
-        printLoop('ˉ', max_col + (max_col / 3) - 2);
-        // printLoop(' ', max_col);
-        tweetStream += "\\\n| ";
         i = 0;
         col = 0;
-        int lineno = 0, tabline = -1;
-
+        int lineno = 0, tabline = -1, maxCharPerLine = 32;
+        tweetStream += ' ';
         while (true) {
             if (buf[i] == '\t') {
                 tabcnt++;
@@ -78,8 +96,9 @@ public class Catsay {
                         printLoop(' ', max_col - col - 1);
                     else
                         printLoop(' ', max_col - col);
-                    tweetStream += '|';
+                    tweetStream += ' ';
                     tweetStream += buf[i];
+                    maxCharPerLine -= 2;
                 }
                 else if (buf[i + 1] == '\0') {
                     tweetStream += buf[i];
@@ -89,10 +108,10 @@ public class Catsay {
                         printLoop(' ', max_col - col - 2);
                     else
                         printLoop(' ', max_col - col - 1);
-                    tweetStream += "|\n";
+                    tweetStream += '\n';
                     break;
                 }
-                tweetStream += "| ";
+                tweetStream += ' ';
                 col = 0;
                 lineno++;
             }
