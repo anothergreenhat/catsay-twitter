@@ -35,8 +35,6 @@ public class Catsay {
         int col = 0, max_col = 0, i = 0, tabcnt = 0;
         char oldSpaceC = 'a';
         for (char c : cookie.getText().toCharArray()) {
-            // System.out.println("c: " + (c == ' ' ? "SPACE" : c) + "\nold c: "
-            // + (oldSpaceC == ' ' ? "SPACE" : oldSpaceC));
             if (c == ' ' && oldSpaceC == ' ' || c == '\t') {
                 oldSpaceC = c;
                 if (c == '\t') {
@@ -69,7 +67,6 @@ public class Catsay {
                         if (buf[j] == ' ' || buf[j] == '\t')
                             break;
                     }
-                    // System.out.println(overhangingWord);
                     buf[j] = '\n';
                     col = 0;
                     for (int k = 0; k < overhangingWord.length(); k++, j++) {
@@ -95,7 +92,6 @@ public class Catsay {
         buf[i + 1] = '\0';
         max_col += 3;
 
-        // printLoop('~', max_col - (max_col / 14) + 2);
         tweetStream += "~~~~~~~~~~~~~~~~~~~~~~~~~~~";
         tweetStream += "\n ";
 
@@ -110,27 +106,15 @@ public class Catsay {
             }
             if ((buf[i] == '\n' && (max_col > col)) || (buf[i + 1] == '\0')) {
                 if (buf[i] == '\n') {
-                    /*
-                     * if (tabline == lineno) printLoop(' ', max_col - col + 2);
-                     * else if (lineno == 0) printLoop(' ', max_col - col - 1);
-                     * else printLoop(' ', max_col - col);
-                     */
-
                     if (i > 0 && buf[i - 1] == '\n' && buf[i] != ' ')
                         tweetStream += ' ';
                     tweetStream += buf[i];
                 }
                 else if (buf[i + 1] == '\0') {
                     tweetStream += buf[i];
-                    /*
-                     * if (tabline == lineno) printLoop(' ', max_col - col + 1);
-                     * else if (lineno == 0) printLoop(' ', max_col - col - 2);
-                     * else printLoop(' ', max_col - col - 1);
-                     */
                     tweetStream += '\n';
                     break;
                 }
-                // tweetStream += ' ';
                 col = 0;
                 lineno++;
             }
@@ -142,7 +126,6 @@ public class Catsay {
             i++;
             col++;
         }
-        // printLoop('~', max_col - (max_col / 14) + 2);
         tweetStream += "~~~~~~~~~~~~~~~~~~~~~~~~~~~";
         tweetStream += '\n';
 

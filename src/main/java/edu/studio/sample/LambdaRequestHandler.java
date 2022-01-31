@@ -3,6 +3,7 @@ package edu.studio.sample;
 import java.util.Locale;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import jfortune.Cookie;
@@ -29,19 +30,25 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
         Configuration config = configure();
         Tweeter tweeter = createTweeter(config);
 
+        LambdaLogger logger = context.getLogger();
+
         Fortune fortune = new Fortune(new Locale("en"));
         fortune.setShortLength(40);
         Cookie cookie = fortune.getShortCookie();
 
         Catsay catPrint = new Catsay();
         String tweetBody = catPrint.makeTweet(cookie);
+
+        int retryMakeTweetBodyCount = 0;
         while (tweetBody.length() > 280) {
+            retryMakeTweetBodyCount++;
             catPrint.clearStream();
             cookie = fortune.getShortCookie();
             tweetBody = catPrint.makeTweet(cookie);
         }
+        logger.log("retryCount: " + retryMakeTweetBodyCount + '\n');
+        logger.log("bodyLength: " + tweetBody.length() + '\n');
         return tweeter.tweet(tweetBody);
-
     }
 
     Configuration configure() {
