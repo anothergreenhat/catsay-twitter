@@ -17,89 +17,73 @@ class SampleTest
 		System.setProperty("line.separator", "\n");
 	}
 
-	@Test
-	void testCreateShortTweetInLengthLimit()
-	{
-		Fortune fortune = new Fortune(new Locale("en"));
-		fortune.setShortLength(280 - 132 - 25);
-		Cookie cookie = fortune.getShortCookie();
-
-		Catsay catPrint = new Catsay();
-		catPrint.clearStream();
-		String tweetBody = catPrint.makeTweet(cookie);
-		System.out.println(tweetBody + "\nNum chars: " + tweetBody.length());
-		assert (tweetBody.length() <= 280);
-
-		cookie = fortune.getShortCookie();
-		catPrint.clearStream();
-		tweetBody = catPrint.makeTweet(cookie);
-		System.out.println(tweetBody + "\nNum chars: " + tweetBody.length());
-		assert (tweetBody.length() <= 280);
-
-		cookie = fortune.getShortCookie();
-		catPrint.clearStream();
-		tweetBody = catPrint.makeTweet(cookie);
-		System.out.println(tweetBody + "\nNum chars: " + tweetBody.length());
-		assert (tweetBody.length() <= 280);
-
-		cookie = fortune.getShortCookie();
-		catPrint.clearStream();
-		tweetBody = catPrint.makeTweet(cookie);
-		System.out.println(tweetBody + "\nNum chars: " + tweetBody.length());
-		assert (tweetBody.length() <= 280);
-
-		cookie = fortune.getShortCookie();
-		catPrint.clearStream();
-		tweetBody = catPrint.makeTweet(cookie);
-		System.out.println(tweetBody + "\nNum chars: " + tweetBody.length());
-		assert (tweetBody.length() <= 280);
-
-		cookie = fortune.getShortCookie();
-		catPrint.clearStream();
-		tweetBody = catPrint.makeTweet(cookie);
-		System.out.println(tweetBody + "\nNum chars: " + tweetBody.length());
-		assert (tweetBody.length() <= 280);
-	}
+	/*
+	 * @Test void testCreateShortTweetInLengthLimit() { Fortune fortune = new Fortune(new Locale("en"));
+	 * fortune.setShortLength(280 - 132 - 25); Cookie cookie = fortune.getShortCookie();
+	 * 
+	 * Catsay catPrint = new Catsay(); catPrint.clearStream(); String tweetBody = catPrint.makeTweet(cookie);
+	 * System.out.println(tweetBody + "\nNum chars: " + tweetBody.length()); assert (tweetBody.length() <= 280);
+	 * 
+	 * cookie = fortune.getShortCookie(); catPrint.clearStream(); tweetBody = catPrint.makeTweet(cookie);
+	 * System.out.println(tweetBody + "\nNum chars: " + tweetBody.length()); assert (tweetBody.length() <= 280);
+	 * 
+	 * cookie = fortune.getShortCookie(); catPrint.clearStream(); tweetBody = catPrint.makeTweet(cookie);
+	 * System.out.println(tweetBody + "\nNum chars: " + tweetBody.length()); assert (tweetBody.length() <= 280);
+	 * 
+	 * cookie = fortune.getShortCookie(); catPrint.clearStream(); tweetBody = catPrint.makeTweet(cookie);
+	 * System.out.println(tweetBody + "\nNum chars: " + tweetBody.length()); assert (tweetBody.length() <= 280);
+	 * 
+	 * cookie = fortune.getShortCookie(); catPrint.clearStream(); tweetBody = catPrint.makeTweet(cookie);
+	 * System.out.println(tweetBody + "\nNum chars: " + tweetBody.length()); assert (tweetBody.length() <= 280);
+	 * 
+	 * cookie = fortune.getShortCookie(); catPrint.clearStream(); tweetBody = catPrint.makeTweet(cookie);
+	 * System.out.println(tweetBody + "\nNum chars: " + tweetBody.length()); assert (tweetBody.length() <= 280); }
+	 * 
+	 * @Test void testCreateLongTweet() { Fortune fortune = new Fortune(new Locale("en")); Cookie cookie =
+	 * fortune.getLongCookie(); if (cookie.getText().length() > 700) { System.out.println(cookie.getText() +
+	 * "\nNum chars: " + cookie.getText().length()); } else { assert (cookie.getText().length() < 700); Catsay catPrint
+	 * = new Catsay(); catPrint.clearStream(); String tweetBody = catPrint.makeTweet(cookie);
+	 * System.out.println(tweetBody + "\nNum chars: " + tweetBody.length()); } }
+	 * 
+	 * @Test void testRetryForNewerTweets() { Fortune fortune = new Fortune(new Locale("en"));
+	 * fortune.setShortLength(200); Cookie cookie = fortune.getShortCookie();
+	 * 
+	 * Catsay catPrint = new Catsay(); String tweetBody = catPrint.makeTweet(cookie);
+	 * 
+	 * int retryMakeTweetBodyCount = 0; while (tweetBody.length() > 280) { retryMakeTweetBodyCount++;
+	 * catPrint.clearStream(); cookie = fortune.getShortCookie(); tweetBody = catPrint.makeTweet(cookie); }
+	 * System.out.print("retryCount: " + retryMakeTweetBodyCount + '\n'); System.out.print("bodyLength: " +
+	 * tweetBody.length() + '\n'); System.out.print(tweetBody); }
+	 */
 
 	@Test
-	void testCreateLongTweet()
+	void testRetryUntilDataError()
 	{
-		Fortune fortune = new Fortune(new Locale("en"));
-		Cookie cookie = fortune.getLongCookie();
-		if (cookie.getText().length() > 700)
-		{
-			System.out.println(cookie.getText() + "\nNum chars: " + cookie.getText().length());
-		}
-		else
-		{
-			assert (cookie.getText().length() < 700);
-			Catsay catPrint = new Catsay();
-			catPrint.clearStream();
-			String tweetBody = catPrint.makeTweet(cookie);
-			System.out.println(tweetBody + "\nNum chars: " + tweetBody.length());
-		}
-	}
-
-	@Test
-	void testRetryForNewerTweets()
-	{
+		System.out.println();
 		Fortune fortune = new Fortune(new Locale("en"));
 		fortune.setShortLength(200);
-		Cookie cookie = fortune.getShortCookie();
 
-		Catsay catPrint = new Catsay();
-		String tweetBody = catPrint.makeTweet(cookie);
-
-		int retryMakeTweetBodyCount = 0;
-		while (tweetBody.length() > 280)
+		while (true)
 		{
-			retryMakeTweetBodyCount++;
-			catPrint.clearStream();
-			cookie = fortune.getShortCookie();
-			tweetBody = catPrint.makeTweet(cookie);
+			Cookie cookie = fortune.getShortCookie();
+
+			String cookiePlainText = cookie.getText();
+
+			Catsay catPrint = new Catsay();
+			String tweetBody = catPrint.makePlainTextBody(cookie);
+
+			if (catPrint.isTweetErrorFree(cookiePlainText))
+				assert true;
+			else
+			{
+				catPrint.clearStream();
+				catPrint.makePlainTextBody(cookie);
+				catPrint.deleteLastChar();
+				if (catPrint.isTweetErrorFree(cookiePlainText))
+					assert true;
+				else
+					assert false;
+			}
 		}
-		System.out.print("retryCount: " + retryMakeTweetBodyCount + '\n');
-		System.out.print("bodyLength: " + tweetBody.length() + '\n');
-		System.out.print(tweetBody);
 	}
 }
